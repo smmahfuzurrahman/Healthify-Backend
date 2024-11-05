@@ -7,10 +7,15 @@ const router = Router();
 
 router.post('/', auth(USER_ROLE.user), MedicineControllers.addMedicine);
 router.get('/', auth(USER_ROLE.user), MedicineControllers.getUserMedicines);
+
 router.delete(
   '/:id',
   auth(USER_ROLE.user),
-  MedicineControllers.removeUserMedicines,
+  MedicineControllers.removeUserMedicine,
 );
 
 export const MedicineRoutes = router;
+
+
+
+ 

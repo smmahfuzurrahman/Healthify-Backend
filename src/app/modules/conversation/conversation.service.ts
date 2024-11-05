@@ -46,9 +46,9 @@ const updateConversationFromDB = async (id: string, payload: string) => {
 };
 
 const getSingleConversationFromDB = async (id: string, userId: string) => {
-  console.log(userId);
+  
   const user = await User.findById(userId);
-  console.log(user);
+  
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'User not found');
   }
@@ -60,9 +60,22 @@ const getSingleConversationFromDB = async (id: string, userId: string) => {
   }
   return conversation;
 };
+
+const removeSingleConversationFromDB = async (id: string, userId: string) => {
+  
+  const user = await User.findById(userId);
+  
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  const deletedConversation = await Conversation.findByIdAndDelete(id)
+  return deletedConversation;
+};
+
 export const ConversationServices = {
   getUserConversationFromDB,
   createConversationIntoDB,
   updateConversationFromDB,
-  getSingleConversationFromDB
+  getSingleConversationFromDB,
+  removeSingleConversationFromDB
 };

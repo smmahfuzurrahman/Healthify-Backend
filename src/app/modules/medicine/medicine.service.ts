@@ -1,4 +1,4 @@
-import httpStatus, { CREATED } from 'http-status';
+import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { User } from '../user/user.model';
 import { TMedicine } from './medicine.interface';
@@ -20,7 +20,7 @@ const getUserMedicinesFromDB = async (userId: string) => {
     throw new AppError(httpStatus.NOT_FOUND, 'User not found');
   }
   const medicines = await Medicine.find({ userId }).sort({
-    createdAt: -1
+    createdAt: -1,
   });
 
   return medicines;

@@ -1,11 +1,16 @@
-
 import cron from 'node-cron';
+import moment from 'moment-timezone';
 import { TMedicine } from './medicine.interface';
 import { io } from '../../../server';
 
+// Set Bangladesh Time Zone
+const BD_TIMEZONE = 'Asia/Dhaka';
+
 export const scheduleMedicineAlarms = (medicine: TMedicine) => {
   const { time, days, name, userId } = medicine;
-  const [hour, minute] = time.split(':').map(Number);
+
+  // Convert the time to Bangladesh time zone
+  const [hour, minute] = moment.tz(time, 'HH:mm', BD_TIMEZONE).format('HH:mm').split(':').map(Number);
 
   // Schedule the task for each day
   days.forEach((day) => {
@@ -15,13 +20,15 @@ export const scheduleMedicineAlarms = (medicine: TMedicine) => {
     const cronTime = `${minute} ${hour} * * ${dayOfWeek}`;
 
     cron.schedule(cronTime, () => {
-      console.log(`Scheduled alarm for ${name} at ${time} on ${day}`);
+      console.log(`Scheduled alarm for ${name} at ${time} on ${day} (BD Time)`);
       // Emit alarm event to the frontend through Socket.IO
       io.to(userId.toString()).emit('medicine-alarm', {
         message: `It's time to take your medicine: ${name}`,
         time,
         day,
       });
+    }, {
+      timezone: BD_TIMEZONE // Set the cron job to run in Bangladesh Time Zone
     });
   });
 };
@@ -39,4 +46,3 @@ export const getCronDay = (day: string): number => {
   };
   return daysOfWeek[day.toLowerCase()];
 };
-

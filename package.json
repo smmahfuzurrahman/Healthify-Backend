@@ -25,6 +25,7 @@
     "express": "^4.19.2",
     "http-status": "^1.7.4",
     "jsonwebtoken": "^9.0.2",
+    "moment-timezone": "^0.5.46",
     "mongoose": "^8.4.4",
     "node-cron": "^3.0.3",
     "socket.io": "^4.8.0",

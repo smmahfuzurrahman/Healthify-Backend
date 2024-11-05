@@ -18,7 +18,7 @@ const getSingleConversation = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params;
     const { userId } = req.user;
-    console.log(userId);
+
     const result = await ConversationServices.getSingleConversationFromDB(
       id,
       userId,
@@ -57,9 +57,28 @@ const updateConversation = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+
+const removeSingleConversation = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { userId } = req.user;
+    const result = await ConversationServices.removeSingleConversationFromDB(
+      id,
+      userId,
+    );
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Message list fetched successfully',
+      data: result,
+    });
+  },
+);
+
 export const ConversationControllers = {
   getUserConversation,
   createConversation,
   updateConversation,
   getSingleConversation,
+  removeSingleConversation,
 };

@@ -6,6 +6,7 @@ import { User } from '../user/user.model';
 import { TLogin } from './auth.interface';
 import jwt from 'jsonwebtoken';
 import config from '../../config';
+import { getToken } from '../../utils/getToken';
 
 const createUserIntoDB = async (payload: TUser) => {
   const isUserExist = await User.findOne({ email: payload?.email });
@@ -44,9 +45,7 @@ const loginUser = async (payload: TLogin) => {
     role: user?.role,
     status: user.profileCompleteStatus,
   };
-  const token = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
-    expiresIn: '30d',
-  });
+  const token = getToken(jwtPayload)
   const { password, ...restData } = user.toObject();
   return {
     token,

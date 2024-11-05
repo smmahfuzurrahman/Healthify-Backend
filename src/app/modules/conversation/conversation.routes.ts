@@ -17,5 +17,9 @@ router.get(
 );
 router.post('/', ConversationControllers.createConversation);
 router.put('/:id', ConversationControllers.updateConversation);
-
+router.delete(
+  '/:id',
+  auth(USER_ROLE.user),
+  ConversationControllers.removeSingleConversation,
+);
 export const ConversationRoutes = router;

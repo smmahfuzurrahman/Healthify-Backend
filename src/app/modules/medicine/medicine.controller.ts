@@ -11,7 +11,6 @@ const addMedicine = catchAsync(async (req: Request, res: Response) => {
     userId,
     ...data,
   };
-  console.log(medicineReminder);
   const result = await MedicineServices.addMedicineIntoDB(medicineReminder);
 
   sendResponse(res, {
@@ -34,7 +33,7 @@ const getUserMedicines = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const removeUserMedicines = catchAsync(async (req: Request, res: Response) => {
+const removeUserMedicine = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await MedicineServices.RemoveUserMedicineFromDB(id);
 
@@ -49,5 +48,5 @@ const removeUserMedicines = catchAsync(async (req: Request, res: Response) => {
 export const MedicineControllers = {
   addMedicine,
   getUserMedicines,
-  removeUserMedicines,
+  removeUserMedicine,
 };
