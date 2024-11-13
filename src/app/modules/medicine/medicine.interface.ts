@@ -16,4 +16,5 @@ export type TMedicine = {
   power: string;
   time: string;
   days: TDays[];
+  email: string;
 };

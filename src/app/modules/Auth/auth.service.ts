@@ -42,6 +42,7 @@ const loginUser = async (payload: TLogin) => {
 
   const jwtPayload = {
     userId: user._id,
+    email: user.email,
     role: user?.role,
     status: user.profileCompleteStatus,
   };

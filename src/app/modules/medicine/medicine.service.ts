@@ -7,8 +7,9 @@ import { scheduleMedicineAlarms } from './medicine.utils';
 
 const addMedicineIntoDB = async (payload: TMedicine) => {
   const result = await Medicine.create(payload);
+  const userEmail = await User.findById(payload.userId)
   // Schedule alarms for the added medicine
-  scheduleMedicineAlarms(result);
+  scheduleMedicineAlarms(result, userEmail!.email);
   return result;
 };
 
